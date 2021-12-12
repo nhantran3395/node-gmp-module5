@@ -12,6 +12,8 @@ const {
   deleteUser,
 } = userService;
 
+const logger = Logger("user-controller");
+
 export const userController = {
   async getUserById(
     req: Request<{ id: string }>,
@@ -19,11 +21,11 @@ export const userController = {
     next: NextFunction
   ) {
     const id = req.params.id;
-    Logger.info(`Finding user with id = ${id}`);
+    logger.info(`Finding user with id = ${id}`);
 
     try {
       const user = await getUserById(id);
-      Logger.info(`Found user with id = ${user.id}`);
+      logger.info(`Found user with id = ${user.id}`);
       res.json(user);
     } catch (error: any) {
       next(error);
@@ -35,9 +37,9 @@ export const userController = {
     next: NextFunction
   ) {
     const { loginQuery, limit } = req.query;
-    Logger.info(`Getting user auto suggestions`);
-    Logger.info(`loginQuery: ${loginQuery}`);
-    Logger.info(`limit: ${limit}`);
+    logger.info(`Getting user auto suggestions`);
+    logger.info(`loginQuery: ${loginQuery}`);
+    logger.info(`limit: ${limit}`);
 
     try {
       const suggests = await getUserAutoSuggestion(loginQuery, limit);
@@ -52,12 +54,12 @@ export const userController = {
     next: NextFunction
   ) {
     const userData = req.body;
-    Logger.info(`Creating new user`);
-    Logger.info(userData);
+    logger.info(`Creating new user`);
+    logger.info(userData);
 
     try {
       await createUser(userData);
-      Logger.info(`Created user`);
+      logger.info(`Created user`);
       res.status(201).json({ message: API_MESSAGES.USER_CREATED_SUCCESS });
     } catch (error: any) {
       next(error);
@@ -70,12 +72,12 @@ export const userController = {
   ) {
     const id = req.params.id;
     const userData = req.body;
-    Logger.info(`Updating user with id = ${id}`);
-    Logger.info(userData);
+    logger.info(`Updating user with id = ${id}`);
+    logger.info(userData);
 
     try {
       const user = await updateUser(id, userData);
-      Logger.info(`Updated user with id = ${id}`);
+      logger.info(`Updated user with id = ${id}`);
       res.json(user);
     } catch (error: any) {
       next(error);
@@ -87,11 +89,11 @@ export const userController = {
     next: NextFunction
   ) {
     const id = req.params.id;
-    Logger.info(`Removing user with ${id}`);
+    logger.info(`Removing user with ${id}`);
 
     try {
       await deleteUser(id);
-      Logger.info(`Removed user with id = ${id}`);
+      logger.info(`Removed user with id = ${id}`);
       res.json({ message: API_MESSAGES.USER_DELETED_SUCCESS });
     } catch (error: any) {
       next(error);

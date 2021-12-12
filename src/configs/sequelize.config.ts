@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 import { Logger } from "../logger";
 
 const databaseUri = process.env.DATABASE_URI ?? "";
+const logger = Logger("sequelize");
 
 const sequelize = new Sequelize(databaseUri, {
   dialect: "postgres",
@@ -12,7 +13,7 @@ const sequelize = new Sequelize(databaseUri, {
       rejectUnauthorized: false,
     },
   },
-  logging: (msg) => Logger.debug(msg),
+  logging: (msg) => logger.debug(msg),
 });
 
 export { sequelize };

@@ -12,6 +12,7 @@ import "./models/associations";
 
 const app = express();
 const port = process.env.APPLICATION_PORT ?? 3002;
+const logger = Logger("index");
 
 app.use(express.json());
 app.use(morganMiddleware);
@@ -37,5 +38,5 @@ app.use(errorHandlingMiddleware);
 app.use(routeNotExistsHandlingMiddleware);
 
 app.listen(port, () => {
-  Logger.info(`server started on port ${port}`);
+  logger.info(`Server started on port ${port}`);
 });

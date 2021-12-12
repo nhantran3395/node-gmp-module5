@@ -14,6 +14,8 @@ const {
   addUsersToGroup,
 } = groupService;
 
+const logger = Logger("group-controller");
+
 export const groupController = {
   async getGroupById(
     req: Request<{ id: string }>,
@@ -21,11 +23,11 @@ export const groupController = {
     next: NextFunction
   ) {
     const id = req.params.id;
-    Logger.info(`Finding group with id = ${id}`);
+    logger.info(`Finding group with id = ${id}`);
 
     try {
       const group = await getGroupById(id);
-      Logger.info(`Found group with id = ${group.id}`);
+      logger.info(`Found group with id = ${group.id}`);
       res.json(group);
     } catch (error: any) {
       next(error);
@@ -36,7 +38,7 @@ export const groupController = {
     res: Response,
     next: NextFunction
   ) {
-    Logger.info(`Finding all groups`);
+    logger.info(`Finding all groups`);
 
     try {
       const groups = await getAllGroups();
@@ -51,12 +53,12 @@ export const groupController = {
     next: NextFunction
   ) {
     const groupData = req.body;
-    Logger.info(`Creating new group`);
-    Logger.info(groupData);
+    logger.info(`Creating new group`);
+    logger.info(groupData);
 
     try {
       await createGroup(groupData);
-      Logger.info(`Created group`);
+      logger.info(`Created group`);
       res.status(201).json({ message: API_MESSAGES.GROUP_CREATED_SUCCESS });
     } catch (error: any) {
       next(error);
@@ -69,12 +71,12 @@ export const groupController = {
   ) {
     const id = req.params.id;
     const groupData = req.body;
-    Logger.info(`Updating group with id = ${id}`);
-    Logger.info(groupData);
+    logger.info(`Updating group with id = ${id}`);
+    logger.info(groupData);
 
     try {
       const group = await updateGroup(id, groupData);
-      Logger.info(`Updated group with id = ${id}`);
+      logger.info(`Updated group with id = ${id}`);
       res.json(group);
     } catch (error: any) {
       next(error);
@@ -86,11 +88,11 @@ export const groupController = {
     next: NextFunction
   ) {
     const id = req.params.id;
-    Logger.info(`Removing group with id = ${id}`);
+    logger.info(`Removing group with id = ${id}`);
 
     try {
       await deleteGroup(id);
-      Logger.info(`Removed group with id = ${id}`);
+      logger.info(`Removed group with id = ${id}`);
       res.json({ message: API_MESSAGES.GROUP_DELETED_SUCCESS });
     } catch (error: any) {
       next(error);
@@ -102,8 +104,8 @@ export const groupController = {
     next: NextFunction
   ) {
     const data = req.body;
-    Logger.info(`Adding users to group`);
-    Logger.info(data);
+    logger.info(`Adding users to group`);
+    logger.info(data);
 
     try {
       await addUsersToGroup(data);

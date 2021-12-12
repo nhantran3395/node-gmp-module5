@@ -28,7 +28,8 @@ const format = winston.format.combine(
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
   winston.format.colorize({ all: true }),
   winston.format.printf(
-    (info) => `${info.timestamp} ${info.level}: ${info.message}`
+    (option) =>
+      `${option.timestamp} : ${option.moduleName} : ${option.level} : ${option.message}`
   )
 );
 
@@ -41,11 +42,15 @@ const transports = [
   new winston.transports.File({ filename: "logs/all.log" }),
 ];
 
-const Logger = winston.createLogger({
+const logger = winston.createLogger({
   level: level(),
   levels,
   format,
   transports,
 });
+
+const Logger = (name: string) => {
+  return logger.child({ moduleName: name });
+};
 
 export default Logger;

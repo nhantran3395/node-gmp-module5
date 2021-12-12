@@ -2,8 +2,10 @@ import morgan, { StreamOptions } from "morgan";
 
 import { Logger } from "../logger";
 
+const logger = Logger("morgan");
+
 const stream: StreamOptions = {
-  write: (message) => Logger.http(message),
+  write: (message) => logger.http(message),
 };
 
 const skip = () => {

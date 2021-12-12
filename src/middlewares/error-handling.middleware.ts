@@ -3,13 +3,15 @@ import { ApiError } from "../exceptions";
 import { API_MESSAGES } from "../shared/messages";
 import { Logger } from "../logger";
 
+const logger = Logger("error-handler");
+
 const errorHandlingMiddleware = (
   err: Error | ApiError,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  Logger.error(err);
+  logger.error(err.stack);
 
   if (err instanceof ApiError) {
     return res.status(err.code).json({ message: err.message });
