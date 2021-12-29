@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(morganMiddleware);
 
 app.get("/", function (req, res) {
-  res.json({ message: "module 4 application is running" });
+  res.json({ message: "module 5 application is running" });
 });
 
 app.get("/databaseconnection", async function (req, res, next: NextFunction) {
