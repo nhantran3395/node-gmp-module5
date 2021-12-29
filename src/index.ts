@@ -33,9 +33,16 @@ app.get("/databaseconnection", async function (req, res, next: NextFunction) {
 app.use("/users", userRouter);
 app.use("/groups", groupRouter);
 
-app.use(errorHandlingMiddleware);
-
 app.use(routeNotExistsHandlingMiddleware);
+
+process
+  .on("uncaughtException", (error) => {
+    throw error;
+  })
+  .on("unhandledRejection", (error) => {
+    throw error;
+  });
+app.use(errorHandlingMiddleware);
 
 app.listen(port, () => {
   logger.info(`Server started on port ${port}`);
