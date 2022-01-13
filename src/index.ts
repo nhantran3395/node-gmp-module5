@@ -40,7 +40,7 @@ process
     logger.error(error);
   })
   .on("unhandledRejection", (error) => {
-    throw error;
+    logger.error(error);
   });
 app.use(errorHandlingMiddleware);
 
