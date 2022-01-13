@@ -37,7 +37,7 @@ app.use(routeNotExistsHandlingMiddleware);
 
 process
   .on("uncaughtException", (error) => {
-    throw error;
+    logger.error(error);
   })
   .on("unhandledRejection", (error) => {
     throw error;
